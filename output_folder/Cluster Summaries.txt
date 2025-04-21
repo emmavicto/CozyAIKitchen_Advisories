@@ -1,0 +1,102 @@
+Cluster: 0
+ClusterSummary:
+1. **Cluster Title**: SurrealDB Denial-of-Service (DoS) Vulnerabilities
+
+2. **Cluster Description**: This cluster of advisories highlights several Denial-of-Service (DoS) vulnerabilities within SurrealDB. The common theme among these advisories is the ability of authenticated users to exploit various functions and features to exhaust system resources, leading to server crashes or unresponsiveness. The vulnerabilities include CPU exhaustion via custom functions, memory exhaustion through string replacements and nested functions, and unbounded execution time for JavaScript functions. Additionally, there are issues with improper handling of HTTP queries and uncaught exceptions that can crash the database. These vulnerabilities were discovered during a code audit and penetration test by cure53, with varying severity levels from Low to Critical.
+
+3. **Suggested Actions**:
+   - **Upgrade SurrealDB**: Ensure all instances are updated to versions 2.0.5, 2.1.5, 2.2.2, or later, which contain patches for these vulnerabilities.
+   - **Restrict Function Usage**: Use the `--deny-functions` flag or `SURREAL_CAPS_DENY_FUNC` environment variable to limit the execution of custom functions, especially those that are untrusted.
+   - **Limit Scripting Capabilities**: Disable scripting functions using the `--deny-scripting` flag or `SURREAL_CAPS_DENY_SCRIPT=true` environment variable to prevent exploitation of unbounded execution time.
+   - **Implement Resource Limits**: Configure environment variables such as `SURREAL_GENERATION_ALLOCATION_LIMIT` and `SURREAL_SCRIPTING_MAX_TIME_LIMIT` to enforce limits on memory allocation and execution time.
+   - **Sanitize Inputs**: Ensure proper sanitization of inputs at the application layer to prevent injection attacks that could exploit these vulnerabilities.
+   - **Monitor and Restart**: Set up monitoring and automatic restart mechanisms for SurrealDB instances to mitigate the impact of crashes and ensure continuous availability.
+
+4. **Summary**: The identified DoS vulnerabilities in SurrealDB can severely impact server availability and performance. By upgrading to patched versions, restricting function and scripting capabilities, implementing resource limits, and ensuring input sanitization, administrators can significantly reduce the risk of exploitation. These actions are crucial for maintaining the integrity and availability of SurrealDB instances, especially in environments where it serves as a backend for applications.
+
+5. **Data References**:
+   - **SurrealDB CPU exhaustion via custom functions**: [SurrealQL Documentation - DEFINE FUNCTION Statement](https://surrealdb.com/docs/surrealql/statements/define/function)
+   - **SurrealDB no JavaScript script function default timeout**: [SurrealQL Documentation - Scripting Functions](https://surrealdb.com/docs/surrealql/functions/script)
+   - **SurrealDB memory exhaustion via string::replace using regex**: [SurrealQL Documentation - DB Functions (string::replace)](https://surrealdb.com/docs/surrealql/functions/database/string#stringreplace)
+   - **SurrealDB server-takeover via SurrealQL injection on backup import**: [SurrealDB Documentation - Export](https://surrealdb.com/docs/surrealdb/cli/export)
+   - **SurrealDB has local file read of 2-column TSV files via analyzers**: [SurrealQL Documentation - DEFINE ANALYZER](https://surrealdb.com/docs/surrealql/statements/define/analyzer#define-analyzer-statement)
+   - **SurrealDB vulnerable to memory exhaustion via nested functions and scripts**: [SurrealQL Documentation - Scripting Functions](https://surrealdb.com/docs/surrealql/functions/script)
+   - **SurrealDB has uncaught exception in Net module that leads to database crash**: [SurrealDB Documentation - Capabilities](https://surrealdb.com/docs/surrealdb/security/capabilities)
+--------------------------------------------------------------------------------
+Cluster: 1
+ClusterSummary:
+1. **Cluster Title**: Resource Management and Privilege Escalation Vulnerabilities
+
+2. **Cluster Description**: This cluster of security advisories highlights critical issues related to resource management and privilege escalation across various software systems. Common themes include improper cleanup of processes leading to resource exhaustion, vulnerabilities allowing unauthorized access to system resources, and flaws in validation mechanisms that can be exploited for privilege escalation. These vulnerabilities affect a range of applications from media players and container orchestration tools to web frameworks and file archiving libraries. The advisories consistently emphasize the need for proper process management, stringent validation of user inputs, and robust access control mechanisms to mitigate these risks.
+
+3. **Suggested Actions**:
+   - **Upgrade Software**: Ensure all affected software versions are upgraded to the latest patched versions as specified in the advisories.
+     - Pleezer: Upgrade to version 0.16.0 ([Fix commit](https://github.com/roderickvd/pleezer/releases/tag/v0.16.0)).
+     - Argo Events: Upgrade to version v1.9.6 ([Patch](https://github.com/argoproj/argo-events/pull/3528)).
+     - gorilla/csrf: Implement validation of the Origin header against an allowlist.
+     - mholt/archiver: Transition to mholt/archives and remove Unarchive() functionality.
+     - CefSharp: Update to the latest version of Google Chrome ([CVE-2025-2783](https://nvd.nist.gov/vuln/detail/CVE-2025-2783)).
+     - Vite: Ensure proper rejection of invalid request targets ([RFC 9112](https://datatracker.ietf.org/doc/html/rfc9112#section-3.2)).
+     - Mattermost: Enforce proper access controls on the /api/v4/audits endpoint.
+     - crossbeam-channel: Upgrade to version 0.5.15 ([MR #1187](https://github.com/crossbeam-rs/crossbeam/pull/1187)).
+     - Helm: Upgrade to version v3.17.3 ([SECURITY](https://github.com/helm/community/blob/master/SECURITY.md)).
+   - **Disable Vulnerable Features**: Temporarily disable features that are prone to exploitation until patches can be applied.
+     - Pleezer: Remove the `--hook` option.
+     - Argo Events: Restrict permissions for creating/modifying EventSource and Sensor CRs.
+   - **Implement Process Cleanup**: Ensure proper cleanup of child processes to prevent resource exhaustion.
+     - Pleezer: Implement asynchronous process handling and cleanup.
+   - **Validate User Inputs**: Strengthen validation mechanisms to prevent unauthorized access and privilege escalation.
+     - gorilla/csrf: Validate Origin and Referer headers.
+     - Vite: Reject invalid request targets as per HTTP specifications.
+   - **Monitor and Restart Services**: Regularly monitor system resources and restart services to clear accumulated zombie processes.
+     - Pleezer: Regularly restart the application.
+   - **Review and Restrict Access Controls**: Enforce strict access controls and review permissions to prevent unauthorized access.
+     - Mattermost: Ensure compliance monitoring access is restricted.
+   - **Limit Resource Usage**: Implement safeguards to prevent excessive resource consumption.
+     - Helm: Ensure chart archives do not contain excessively large files.
+
+4. **Summary**: The advisories in this cluster underscore the importance of robust resource management and stringent access controls in maintaining system security. By upgrading affected software, disabling vulnerable features, implementing proper process cleanup, validating user inputs, monitoring system resources, and enforcing strict access controls, organizations can significantly mitigate the risks associated with these vulnerabilities. These actions are crucial in preventing resource exhaustion, unauthorized access, and privilege escalation, thereby enhancing overall security posture.
+
+5. **Data References**:
+   - Pleezer resource exhaustion: [Initial report](https://github.com/roderickvd/pleezer/discussions/83#discussioncomment-12818199), [Fix commit](https://github.com/roderickvd/pleezer/releases/tag/v0.16.0).
+   - Argo Events privilege escalation: [Patch](https://github.com/argoproj/argo-events/pull/3528).
+   - gorilla/csrf CSRF vulnerability: [Go spec](https://pkg.go.dev/net/http#Request).
+   - mholt/archiver path traversal: [CVE-2024-0406](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-0406).
+   - CefSharp sandbox escape: [CVE-2025-2783](https://nvd.nist.gov/vuln/detail/CVE-2025-2783).
+   - Vite request-target bypass: [RFC 9112](https://datatracker.ietf.org/doc/html/rfc9112#section-3.2).
+   - Mattermost access control failure: [Mattermost versions](https://mattermost.com).
+   - crossbeam-channel double free: [MR #1187](https://github.com/crossbeam-rs/crossbeam/pull/1187).
+   - Helm vulnerabilities: [SECURITY](https://github.com/helm/community/blob/master/SECURITY.md).
+--------------------------------------------------------------------------------
+Cluster: 2
+ClusterSummary:
+1. **Cluster Title**: Cross-Site Scripting (XSS) and XML External Entity (XXE) Vulnerabilities
+
+2. **Cluster Description**: The advisories in this cluster predominantly highlight vulnerabilities related to Cross-Site Scripting (XSS) and XML External Entity (XXE) injection. XSS vulnerabilities are present in Formie, Yii, and Silverstripe Framework, where malicious code can be injected and executed in various contexts such as email previews, form imports, HTML editors, and content block reports. XXE vulnerabilities are identified in ibexa/fieldtype-richtext and ezsystems/ezplatform-richtext, where crafted XML inputs can lead to unauthorized file access on the server. These vulnerabilities generally require specific user permissions to exploit, such as access to form settings or content editing roles.
+
+3. **Suggested Actions**:
+   - **Upgrade Software**: Ensure all systems are running the latest patched versions to mitigate known vulnerabilities.
+     - Formie: Upgrade to version 2.1.44 or higher.
+     - Yii: Upgrade to version 1.1.31 or higher.
+     - Silverstripe Framework: Apply patches as per the security releases.
+     - ibexa/fieldtype-richtext: Apply the patch from [commit 823cba6](https://github.com/ibexa/fieldtype-richtext/commit/823cba6b5ee2e81d7d74e622ce42c1451e8e1337).
+     - ezsystems/ezplatform-richtext: Apply the patch from [commit 5ba2a82](https://github.com/ezsystems/ezplatform-richtext/commit/5ba2a82cc3aa6235ecfe87278e20c1451d9df913).
+   - **Sanitize Inputs**: Implement robust input sanitization mechanisms to prevent XSS and XXE attacks.
+     - Ensure server-side sanitization for HTML content in Silverstripe CMS.
+     - Escape and validate all user inputs in Formie and Yii applications.
+   - **Restrict Permissions**: Limit edit permissions to trusted users only to reduce the risk of exploitation.
+     - Review and adjust user roles and permissions in ibexa and ezsystems platforms.
+   - **Monitor Logs**: Regularly audit system logs for any signs of unauthorized access or suspicious activities.
+     - Implement log redaction for sensitive information such as access tokens in Directus.
+   - **User Awareness**: Educate users about the risks associated with importing and exporting forms, and handling XML content.
+     - Provide guidelines on secure practices for form handling and content editing.
+
+4. **Summary**: This cluster analysis reveals critical vulnerabilities related to XSS and XXE attacks across multiple platforms. Addressing these issues requires timely software updates, stringent input sanitization, permission management, and vigilant monitoring. Implementing the suggested actions will significantly enhance the security posture and mitigate the risks associated with these vulnerabilities, ensuring safer and more resilient systems.
+
+5. **Data References**:
+   - Directus access token exposure: Impact on systems with `LOG_STYLE` set to `raw`.
+   - Formie XSS vulnerabilities: Fixed in version 2.1.44.
+   - Yii XSS vulnerability: Patched in version 1.1.31.
+   - Silverstripe Framework vulnerabilities: Detailed in security releases [ss-2017-005](https://www.silverstripe.org/download/security-releases/ss-2017-005) and [ss-2025-001](https://www.silverstripe.org/download/security-releases/ss-2025-001).
+   - ibexa/fieldtype-richtext and ezsystems/ezplatform-richtext XXE vulnerabilities: Patched versions and commits referenced.
+--------------------------------------------------------------------------------
