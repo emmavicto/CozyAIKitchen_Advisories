@@ -58,10 +58,16 @@ This project demonstrates the value of combining traditional machine learning cl
    ```bash
    pip install -r requirements.txt
    ```
-3. Set up the `.env` file with your Azure OpenAI API key and endpoint:
+3. Set up your environment variables:
+   ```bash
+   # Copy the template file
+   cp .env.template .env
+   # Edit .env with your actual Azure OpenAI credentials
+   ```
+   Replace the placeholder values in `.env` with your actual Azure OpenAI API key and endpoint:
    ```plaintext
-   OPENAI_API_KEY=<your_api_key>
-   OPENAI_API_BASE=<your_api_base_url>
+   OPENAI_API_KEY=your_actual_api_key_here
+   OPENAI_API_BASE=your_actual_api_base_url_here
    ```
 
 ## Usage
